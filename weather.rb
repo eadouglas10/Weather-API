@@ -1,25 +1,23 @@
 #b7ba232230dd80b0
+#http://api.wunderground.com/api/b7ba232230dd80b0/forecast/q/zmw:94125.1.99999.json
 
 require "httparty"
 require "pry"
-class Forecast
+class Weather
   include HTTParty
-  base_uri "https://api.forecast.io"
-  def initialize(key, lat, lng)
+  base_uri "https://api.wunderground.com/api"
+  attr_reader :weather
+  def initialize(key, zip)
     @key = key
-    @lng = lng
-    @lat = lat
+    @zip = zip
+    @weather = {}
   end
 
-  def forecast
-    self.class.get("/forecast/#{@key}/#{@lat},#{@lng}")
+  def get_weather
+    @weather[:conditions] = self.class.get("/#{@key}/conditions/q/zmw:#{@zip}.1.99999.json")
+    @weather[:forecast] = self.class.get("/#{@key}/forecast_10_day/q/zmw:#{@zip}.1.99999.json")
+    @weather[:astronomy] = self.class.get("/#{@key}/astronomy/q/zmw:#{@zip}.1.99999.json")
+    @weather[:alerts] = self.class.get("/#{@key}/alerts/q/zmw:#{@zip}.1.99999.json")
   end
-
-
-
 
 end
-
-f = Forecast.new("c841c27242dd50d1a1744bf123872c95", 38.9059168, -77.0425075)
-
-binding.pry
