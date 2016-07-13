@@ -31,7 +31,7 @@ class WeatherParser
   def parse_astronomy
     risehour = @astronomy["moon_phase"]["sunrise"]["hour"]
     riseminute = @astronomy["moon_phase"]["sunrise"]["minute"]
-    sethour =  = @astronomy["moon_phase"]["sunset"]["hour"]
+    sethour = @astronomy["moon_phase"]["sunset"]["hour"]
     setminute = @astronomy["moon_phase"]["sunset"]["minute"]
     "Today's sunrise was at #{risehour}:#{riseminute} AM and tonight's sunset will be at #{sethour}:#{setminute} PM."
   end
@@ -49,11 +49,3 @@ class WeatherParser
 
 
 end
-
-
-f = Weather.new("b7ba232230dd80b0", 20010)
-f.get_weather
-g = WeatherParser.new(f)
-g.parse_conditions
-
-binding.pry
